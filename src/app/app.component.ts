@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `
+  <h1>{{ (kegs | async)?.name }}</h1>
+  `,
 })
 export class AppComponent {
-  title = 'app';
-
-  kegs: FirebaseListObservable<any[]>;
+  kegs: FirebaseObjectObservable<any>;
   constructor(db: AngularFireDatabase) {
-    this.kegs = db.list('/kegs');
-      }
+    this.kegs = db.object('/kegs');
+  }
 }
